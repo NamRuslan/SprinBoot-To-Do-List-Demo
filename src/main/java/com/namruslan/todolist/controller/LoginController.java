@@ -1,8 +1,10 @@
 package com.namruslan.todolist.controller;
 
 import com.namruslan.todolist.repr.UserRepr;
+import com.namruslan.todolist.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,13 @@ import javax.validation.Valid;
 public class LoginController {
 
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+
+    private final UserService userService;
+
+    @Autowired
+    public LoginController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/login")
     public String loginPage() {
@@ -42,6 +51,8 @@ public class LoginController {
             result.rejectValue("password", "", "Passwords don't match");
             return "register";
         }
+
+        userService.create(userRepr);
 
         return "redirect:/login";
     }
