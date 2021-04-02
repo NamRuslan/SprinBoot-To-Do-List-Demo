@@ -1,5 +1,6 @@
 package com.namruslan.todolist.repr;
 
+import com.namruslan.todolist.persist.entity.ToDo;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotEmpty;
@@ -20,6 +21,13 @@ public class ToDoRepr {
     private LocalDate targetDate;
 
     public ToDoRepr () {
+    }
+
+    public ToDoRepr (ToDo toDo) {
+        this.id = toDo.getId();
+        this.description = toDo.getDescription();
+        this.username = toDo.getUser().getUsername();
+        this.targetDate = toDo.getTargetDate();
     }
 
     public Long getId() {
